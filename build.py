@@ -188,7 +188,22 @@ html[data-theme="dark"] .tile { background: linear-gradient(#18241f, #111a17); b
 .card p { margin: 0; color: var(--muted); font-size: .98rem; }
 .card .foot { margin-top: auto; padding-top: 8px; font: 500 .74rem var(--mono); color: var(--faint); letter-spacing: .06em; text-transform: uppercase; }
 .card.lead { grid-column: 1 / -1; flex-direction: row; }
-.card.lead .art { width: 55%; aspect-ratio: auto; }
+.card.lead .art { aspect-ratio: auto; min-height: 340px; }
+.card .cover { position: relative; overflow: hidden; }
+.card .cover .art { transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+.card:hover .cover .art { transform: scale(1.05); }
+.card .num { position: absolute; left: 16px; bottom: 16px; font: 400 1.9rem/1 var(--serif); color: var(--ink); background: color-mix(in srgb, var(--surface) 88%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid var(--line); border-radius: 14px; padding: 8px 12px 6px; pointer-events: none; }
+.card .badge { position: absolute; top: 16px; left: 16px; font: 600 .68rem var(--mono); letter-spacing: .08em; text-transform: uppercase; background: var(--ink); color: var(--bg); padding: 6px 10px; border-radius: 99px; }
+.card .foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; text-transform: none; letter-spacing: 0; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font: 500 .7rem var(--mono); color: var(--fresh-ink); background: var(--mint); padding: 4px 9px; border-radius: 99px; }
+.card .go { font: 500 .74rem var(--mono); color: var(--faint); white-space: nowrap; }
+.card .go i { display: inline-grid; place-items: center; width: 28px; height: 28px; margin-left: 6px; border-radius: 50%; border: 1px solid var(--line); font-style: normal; color: var(--ink); transition: background .2s, transform .2s, color .2s; }
+.card:hover .go i { background: var(--fresh); border-color: var(--fresh); color: #fff; transform: translateX(3px); }
+.card.lead .cover { width: 55%; flex: none; }
+.card.lead .cover .art { height: 100%; }
+.card.lead .num { font-size: 2.6rem; }
+
 .card.lead .body { padding: 34px; justify-content: center; }
 .card.lead h3 { font-size: clamp(2rem, 3.6vw, 2.9rem); }
 .art { display: block; width: 100%; aspect-ratio: 16 / 10; background: var(--sunk); }
@@ -215,6 +230,25 @@ footer .brand img { width: 24px; height: 24px; } footer .brand b { font-size: 1r
 
 /* article */
 .progress { position: fixed; inset: 0 0 auto 0; height: 3px; background: var(--fresh); transform-origin: 0 50%; transform: scaleX(0); z-index: 40; }
+.p-head { max-width: 1100px; margin: 28px auto 0; }
+.p-art { position: relative; border-radius: 30px; overflow: hidden; border: 1px solid var(--line); }
+.p-art .art { aspect-ratio: 21 / 8; }
+.p-art .big { position: absolute; right: 22px; top: 22px; font: 400 clamp(2.4rem, 5vw, 3.6rem)/1 var(--serif); color: var(--ink); background: color-mix(in srgb, var(--surface) 88%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid var(--line); border-radius: 18px; padding: 10px 16px 6px; }
+.p-card { position: relative; max-width: 880px; margin: -110px auto 0; background: var(--surface); border: 1px solid var(--line); border-radius: 28px; box-shadow: var(--shadow); padding: clamp(26px, 4.5vw, 52px); }
+.crumbs { display: flex; gap: 8px; font: 500 .74rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
+.crumbs a { color: var(--fresh-ink); text-decoration: none; } .crumbs a:hover { text-decoration: underline; }
+.p-card h1 { font: 400 clamp(2.5rem, 6.4vw, 4.6rem)/1.02 var(--serif); letter-spacing: -.025em; color: var(--ink); margin: 16px 0 16px; text-wrap: balance; }
+.p-card .dek { font-size: clamp(1.08rem, 2.1vw, 1.28rem); color: var(--muted); margin: 0; max-width: 36em; }
+.dots { display: flex; gap: 6px; margin: 26px 0 0; }
+.dots a { flex: 1; max-width: 64px; height: 5px; border-radius: 9px; background: var(--line); transition: background .2s; }
+.dots a.past { background: color-mix(in srgb, var(--fresh) 40%, var(--line)); } .dots a.on { background: var(--fresh); } .dots a:hover { background: var(--fresh-ink); }
+.byline { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 16px; margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--line); }
+.byline img { border-radius: 12px; border: 1px solid var(--line); }
+.byline b { display: block; color: var(--ink); font-size: .98rem; } .byline div span { font-size: .86rem; color: var(--faint); }
+.byline .tags { margin-left: auto; }
+html.reading .p-art, html.reading .dots, html.reading .byline .btn-read { display: none; }
+html.reading .p-card { margin-top: 0; box-shadow: none; border: 0; background: none; padding-left: 0; padding-right: 0; }
+@media (max-width: 640px) { .p-art { border-radius: 20px; } .p-art .art { aspect-ratio: 16 / 10; } .p-card { margin: -48px 10px 0; border-radius: 22px; } .byline .tags { margin-left: 0; } }
 .a-head { max-width: 860px; margin: 0 auto; text-align: center; padding: clamp(48px, 8vw, 96px) 0 34px; }
 .a-head .chap { display: inline-flex; align-items: center; gap: 10px; }
 .a-head .chap .mark { width: 54px; }
@@ -279,7 +313,7 @@ html.reading.idle .rbar:hover, html.reading .rbar:focus-within { opacity: 1; }
   .brand span { display: none; }
   .top nav { gap: 14px; } .top nav .hide-sm { display: none; }
   .stats { grid-template-columns: 1fr 1fr; } .stats > div:nth-child(3) { border-left: 0; } .stats > div:nth-child(n+3) { border-top: 1px solid var(--line); }
-  .stories, .disp, .chapnav { grid-template-columns: 1fr; } .card.lead { grid-column: auto; flex-direction: column; } .card.lead .art { width: 100%; aspect-ratio: 16/10; } .card.lead .body { padding: 22px; }
+  .stories, .disp, .chapnav { grid-template-columns: 1fr; } .card.lead { grid-column: auto; flex-direction: column; } .card.lead .cover { width: 100%; } .card.lead .art { min-height: 0; aspect-ratio: 16/10; } .card.lead .body { padding: 22px; }
   .chapnav a.n { text-align: left; }
   .sec-head { flex-direction: column; align-items: start; }
   .hero-art { border-radius: 18px; }
@@ -435,9 +469,12 @@ READBAR = """<div class="rbar" role="toolbar" aria-label="Reading settings">
 </div>"""
 
 def card(p, lead=False):
-    return (f'<a class="card{" lead" if lead else ""}" href="/p/{p["slug"]}">{art(p["slug"])}<div class="body">'
+    tags = "".join(f'<span class="tag">{html.escape(t)}</span>' for t in p["tags"][:2])
+    badge = '<span class="badge">Latest</span>' if lead else ""
+    return (f'<a class="card{" lead" if lead else ""}" href="/p/{p["slug"]}"><div class="cover">{art(p["slug"])}'
+            f'<span class="num">{p["chapter"]:02d}</span>{badge}</div><div class="body">'
             f'<p class="eyebrow"><b>Chapter {p["chapter"]}</b> · {short(p["date"])}</p><h3>{html.escape(p["title"])}</h3>'
-            f'<p>{html.escape(p["summary"])}</p><span class="foot">{p["mins"]} min read →</span></div></a>')
+            f'<p>{html.escape(p["summary"])}</p><div class="foot"><span class="tags">{tags}</span><span class="go">{p["mins"]} min <i>→</i></span></div></div></a>')
 
 CTA = f"""<section class="cta"><img src="/icon-512.png" alt="Freshflo app icon" width="88" height="88">
   <div><h2>Say it messy. <em>Send it fresh.</em></h2><p>This is the app being built in these pages. Free while it's in beta, for Mac, Windows and Android.</p></div>
@@ -451,14 +488,18 @@ for i, p in enumerate(chron):
     body = f"""<div class="progress" aria-hidden="true"></div>
 {READBAR}
 <main>
-  <header class="a-head">
-    <p class="eyebrow chap">{mark()}<span><b>Chapter {p["chapter"]} of {len(chron)}</b> · {nice(p["date"])}</span></p>
-    <h1>{html.escape(p["title"])}</h1>
-    {f'<p class="dek">{html.escape(p["summary"])}</p>' if p["summary"] else ""}
-    <div class="a-meta"><span>{p["mins"]} min read</span><span>{p["words"]:,} words</span>
-      <button class="btn btn-read" type="button" data-read>Reading mode <kbd>R</kbd></button></div>
+  <header class="p-head">
+    <div class="p-art">{art(p["slug"], "Story illustration")}<span class="big">{p["chapter"]:02d}</span></div>
+    <div class="p-card">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">The story</a><span>/</span><span>Chapter {p["chapter"]} of {len(chron)}</span></nav>
+      <h1>{html.escape(p["title"])}</h1>
+      {f'<p class="dek">{html.escape(p["summary"])}</p>' if p["summary"] else ""}
+      <div class="dots" aria-label="Chapter {p['chapter']} of {len(chron)}">{"".join(f'<a href="/p/{c["slug"]}" title="{html.escape(c["title"])}"{" class=on" if c is p else (" class=past" if c["chapter"] < p["chapter"] else "")}></a>' for c in chron)}</div>
+      <div class="byline"><img src="/icon-64.png" alt="" width="40" height="40"><div><b>The Freshflo team</b><span>{nice(p["date"])} · {p["mins"]} min read · {p["words"]:,} words</span></div>
+        <span class="tags">{"".join(f'<span class="tag">{html.escape(t)}</span>' for t in p["tags"])}</span>
+        <button class="btn btn-read" type="button" data-read>Reading mode <kbd>R</kbd></button></div>
+    </div>
   </header>
-  <figure class="hero-art" style="margin:0 auto">{art(p["slug"], "Story illustration")}</figure>
   <article class="post">
 {p["body"]}
     <div class="end" aria-hidden="true">{mark()}</div>
