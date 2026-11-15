@@ -69,159 +69,175 @@ def markdown(text):
     flush()
     return "\n".join(out), toc
 
-# ---------- Look ----------
+# ---------- Look: an editorial magazine on warm paper ----------
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap">')
+         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600;1,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">')
 
 CSS = r"""
 :root {
-  --bg: #fbfbfa; --fg: #16181a; --text: #2a2d31; --muted: #6b7076; --line: #e6e7e8; --soft: #f2f3f3;
-  --accent: #2f6fed; --accent-soft: #e8effd; --code-bg: #f4f5f6;
-  --sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace; --serif: "Newsreader", Georgia, serif;
-  --read: var(--sans); --size: 19px; --measure: 68ch;
-  color-scheme: light;
+  --paper: #f4ede1; --paper-2: #ebe2d2; --ink: #121110; --text: #2b2723; --muted: #6f665c; --rule: #d6cbb8; --red: #a3261b; --red-soft: #f1ddd2;
+  --display: "Playfair Display", Georgia, serif; --serif: "Newsreader", Georgia, serif; --ui: "Inter", system-ui, -apple-system, sans-serif; --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --read: var(--serif); --size: 21px; --measure: 64ch; color-scheme: light;
 }
-html[data-theme="sepia"] { --bg: #f6f0e4; --fg: #2b2216; --text: #3b3022; --muted: #7c6c55; --line: #e4d9c4; --soft: #efe6d4; --accent: #9a5b13; --accent-soft: #f0e2c8; --code-bg: #efe6d4; }
-html[data-theme="dark"] { --bg: #111315; --fg: #eceef0; --text: #cfd3d7; --muted: #8a9096; --line: #26292d; --soft: #1a1d20; --accent: #7aa7ff; --accent-soft: #1b2638; --code-bg: #181b1e; color-scheme: dark; }
-html[data-font="serif"] { --read: var(--serif); }
+html[data-theme="white"] { --paper: #fdfcfa; --paper-2: #f2f0ec; --rule: #e3dfd8; }
+html[data-theme="dark"] { --paper: #16140f; --paper-2: #1f1c16; --ink: #f1ebe0; --text: #d8d0c3; --muted: #9d9385; --rule: #36302a; --red: #ef7b6a; --red-soft: #3a211c; color-scheme: dark; }
+html[data-font="sans"] { --read: var(--ui); }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-padding-top: 24px; }
-body { margin: 0; background: var(--bg); color: var(--text); font: 400 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+body { margin: 0; background: var(--paper); color: var(--text); font: 400 16px/1.6 var(--ui); -webkit-font-smoothing: antialiased; }
 a { color: inherit; }
-::selection { background: var(--accent-soft); }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
-.wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
-.mono { font-family: var(--mono); }
+::selection { background: var(--red-soft); }
+:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(18px, 4vw, 48px); }
+.kicker { font: 500 .7rem/1.4 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--red); }
+.small { font: 500 .72rem/1.4 var(--ui); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 
-/* top bar */
-.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 26px 0; }
-.logo { font: 500 .95rem/1 var(--mono); color: var(--fg); text-decoration: none; letter-spacing: -.01em; }
-.logo .p { color: var(--accent); }
-.logo .cur { display: inline-block; width: .55em; height: 1.05em; margin-left: 3px; vertical-align: -2px; background: var(--accent); animation: blink 1.1s steps(1) infinite; }
-@keyframes blink { 50% { opacity: 0; } }
-.top nav { display: flex; gap: 20px; font: 400 .85rem var(--mono); }
-.top nav a { color: var(--muted); text-decoration: none; }
-.top nav a:hover { color: var(--fg); }
+/* strip + masthead */
+.strip { background: var(--ink); color: var(--paper); text-align: center; font: 500 .7rem/1 var(--ui); letter-spacing: .14em; text-transform: uppercase; padding: 11px 16px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.strip b { color: #f0a493; font-weight: 600; }
+.mast { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; padding: 30px 0 10px; }
+.mast .r { text-align: right; }
+.mast .r a { text-decoration: none; }
+.logo { text-decoration: none; text-align: center; color: var(--ink); }
+.logo b { display: block; font: italic 800 clamp(2.4rem, 7vw, 4.6rem)/1 var(--display); letter-spacing: -.035em; }
+.logo b span { color: var(--red); }
+.sections { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px 30px; padding: 16px 0 18px; border-bottom: 2px solid var(--ink); }
+.sections a { font: 500 .74rem var(--ui); letter-spacing: .16em; text-transform: uppercase; text-decoration: none; color: var(--ink); }
+.sections a:hover { color: var(--red); }
 
-/* home */
-.hero { padding: clamp(48px, 10vw, 112px) 0 40px; }
-.hero h1 { font: 600 clamp(2.2rem, 6vw, 3.4rem)/1.08 var(--sans); letter-spacing: -.035em; color: var(--fg); margin: 0; }
-.hero p { font-size: 1.15rem; color: var(--muted); max-width: 36em; margin: 18px 0 0; }
-.label { font: 500 .74rem/1 var(--mono); letter-spacing: .06em; color: var(--muted); text-transform: lowercase; }
-.label::before { content: "// "; color: var(--accent); }
-.posts { list-style: none; margin: 18px 0 0; padding: 0; border-top: 1px solid var(--line); }
-.posts li { border-bottom: 1px solid var(--line); }
-.posts a.row { display: grid; grid-template-columns: 104px 1fr; gap: 20px; padding: 22px 0; text-decoration: none; }
-.posts time { font: 400 .82rem/1.9 var(--mono); color: var(--muted); }
-.posts h2 { font: 600 1.28rem/1.3 var(--sans); letter-spacing: -.015em; color: var(--fg); margin: 0 0 6px; }
-.posts a.row:hover h2 { color: var(--accent); }
-.posts p { margin: 0; color: var(--muted); font-size: 1rem; line-height: 1.55; }
-.posts .tags { margin-top: 8px; font: 400 .76rem var(--mono); color: var(--muted); }
-.posts .note { display: grid; grid-template-columns: 104px 1fr; gap: 20px; padding: 20px 0; }
-.posts .note .k { font: 500 .72rem var(--mono); color: var(--accent); display: block; margin-top: 2px; }
-.posts .note h3 { font: 600 1rem/1.4 var(--sans); color: var(--fg); margin: 0 0 4px; }
-.posts .note p { color: var(--text); font-size: .98rem; }
-.posts code, article :not(pre) > code { font: .86em var(--mono); background: var(--code-bg); border: 1px solid var(--line); padding: 1px 5px; border-radius: 4px; }
+/* generated cover art */
+.art { display: block; width: 100%; aspect-ratio: 4 / 3; background: var(--paper-2); }
+.art svg { display: block; width: 100%; height: 100%; }
 
-/* post */
-.progress { position: fixed; inset: 0 0 auto 0; height: 2px; background: var(--accent); transform-origin: 0 50%; transform: scaleX(0); z-index: 20; }
-.post-head { padding: clamp(36px, 8vw, 80px) 0 28px; }
-.post-head h1 { font: 600 clamp(2rem, 5.5vw, 3rem)/1.1 var(--sans); letter-spacing: -.03em; color: var(--fg); margin: 14px 0 0; text-wrap: balance; }
-.post-head .sub { font-size: 1.15rem; color: var(--muted); margin: 16px 0 0; }
-.meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font: 400 .8rem var(--mono); color: var(--muted); margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
-.meta .sp { flex: 1; }
-.btn { font: 500 .8rem var(--mono); color: var(--fg); background: var(--soft); border: 1px solid var(--line); border-radius: 6px; padding: 7px 11px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
-.btn:hover { border-color: var(--muted); }
-.btn kbd { font: inherit; font-size: .7rem; color: var(--muted); border: 1px solid var(--line); border-radius: 3px; padding: 0 4px; }
+/* cover story */
+.cover { display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: center; padding: clamp(36px, 6vw, 72px) 0; border-bottom: 1px solid var(--rule); text-decoration: none; }
+.cover h2 { font: italic 800 clamp(2.6rem, 6.2vw, 5rem)/1.02 var(--display); letter-spacing: -.03em; color: var(--ink); margin: 14px 0 22px; text-wrap: balance; }
+.cover .dek { font: 400 1.3rem/1.5 var(--serif); color: var(--text); margin: 0 0 18px; max-width: 30em; }
+.byline { font: 400 .95rem var(--ui); color: var(--muted); }
+.more { display: inline-block; margin-top: 22px; font: 500 1rem var(--ui); color: var(--red); border-bottom: 1px solid var(--red); padding-bottom: 2px; }
+.cover:hover .more { padding-right: 6px; }
+.cover:hover h2 { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 8px; }
 
-article { font: 400 var(--size)/1.75 var(--read); color: var(--text); max-width: var(--measure); padding-bottom: 8px; }
-html[data-font="serif"] article { line-height: 1.7; }
-article p { margin: 0 0 1.3em; }
-article h2 { font: 600 1.45em/1.25 var(--sans); letter-spacing: -.02em; color: var(--fg); margin: 2em 0 .55em; position: relative; }
-article h3 { font: 600 1.12em/1.3 var(--sans); color: var(--fg); margin: 1.7em 0 .4em; position: relative; }
-article .anchor { position: absolute; left: -1.1em; color: var(--muted); text-decoration: none; opacity: 0; font-family: var(--mono); font-weight: 400; }
-article h2:hover .anchor, article h3:hover .anchor { opacity: 1; }
-article ul, article ol { padding-left: 1.25em; margin: 0 0 1.3em; }
-article li { margin: .35em 0; }
-article li::marker { color: var(--muted); }
-article a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
-article strong { color: var(--fg); font-weight: 600; }
-article img { max-width: 100%; border-radius: 8px; border: 1px solid var(--line); }
-.callout { border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 1.8em 0; }
-.callout p { margin: 0; }
-.code { position: relative; margin: 1.6em 0; border: 1px solid var(--line); border-radius: 8px; background: var(--code-bg); }
-.code pre { margin: 0; overflow-x: auto; padding: 16px 18px; font: 400 .84rem/1.65 var(--mono); color: var(--fg); }
-.code .lang { position: absolute; left: 14px; top: -9px; font: 500 .68rem var(--mono); color: var(--muted); background: var(--bg); padding: 0 6px; }
-.code .copy { position: absolute; right: 8px; top: 8px; font: 500 .7rem var(--mono); color: var(--muted); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 3px 7px; cursor: pointer; opacity: 0; transition: opacity .15s; }
-.code:hover .copy, .copy:focus-visible { opacity: 1; }
-.after { margin: 56px 0 0; padding: 24px 0 0; border-top: 1px solid var(--line); display: grid; gap: 4px; }
-.after a { text-decoration: none; }
-.after b { font: 600 1.15rem/1.35 var(--sans); color: var(--fg); }
-.after a:hover b { color: var(--accent); }
+/* contents + dispatches */
+.lower { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: clamp(28px, 5vw, 64px); padding: 44px 0 0; }
+.hd { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--ink); padding-bottom: 10px; margin-bottom: 26px; }
+.hd h3 { font: italic 800 1.6rem/1 var(--display); color: var(--ink); margin: 0; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 32px; }
+.story { text-decoration: none; display: block; }
+.story h4 { font: 800 1.65rem/1.12 var(--display); letter-spacing: -.015em; color: var(--ink); margin: 16px 0 10px; }
+.story:hover h4 { color: var(--red); }
+.story p { font: 400 1.08rem/1.55 var(--serif); color: var(--text); margin: 0 0 10px; }
+.story p.kicker { font: 500 .7rem/1.4 var(--mono); color: var(--red); }
+.story .art { transition: filter .2s; } .story:hover .art { filter: saturate(1.25) contrast(1.05); }
+.disp { list-style: none; margin: 0; padding: 0; counter-reset: d; }
+.disp li { padding: 0 0 22px; margin: 0 0 22px; border-bottom: 1px solid var(--rule); }
+.disp li:last-child { border-bottom: 0; }
+.disp h5 { font: 600 1.15rem/1.3 var(--display); color: var(--ink); margin: 8px 0 6px; }
+.disp p { font: 400 1rem/1.55 var(--serif); color: var(--text); margin: 0; }
+.disp code, article :not(pre) > code { font: .84em var(--mono); background: var(--paper-2); padding: 1px 5px; border-radius: 3px; }
+.quote { margin: 56px 0 0; padding: 40px 0; border-block: 2px solid var(--ink); text-align: center; }
+.quote p { font: italic 600 clamp(1.6rem, 3.6vw, 2.4rem)/1.25 var(--display); color: var(--ink); max-width: 26em; margin: 0 auto; }
+.quote .small { margin-top: 14px; display: block; }
 
-footer { margin-top: 80px; padding: 24px 0 44px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; font: 400 .8rem var(--mono); color: var(--muted); }
-footer a { color: var(--muted); text-decoration: none; } footer a:hover { color: var(--fg); }
+/* article */
+.progress { position: fixed; inset: 0 0 auto 0; height: 3px; background: var(--red); transform-origin: 0 50%; transform: scaleX(0); z-index: 20; }
+.a-head { max-width: 900px; margin: 0 auto; text-align: center; padding: clamp(40px, 7vw, 84px) 0 34px; }
+.a-head h1 { font: italic 800 clamp(2.6rem, 7vw, 5rem)/1.02 var(--display); letter-spacing: -.03em; color: var(--ink); margin: 18px 0 22px; text-wrap: balance; }
+.a-head .dek { font: 400 clamp(1.15rem, 2.2vw, 1.4rem)/1.5 var(--serif); color: var(--text); max-width: 34em; margin: 0 auto; }
+.a-meta { display: flex; justify-content: center; flex-wrap: wrap; align-items: center; gap: 8px 22px; margin-top: 26px; font: 400 .9rem var(--ui); color: var(--muted); }
+.btn { font: 500 .78rem var(--ui); letter-spacing: .1em; text-transform: uppercase; color: var(--paper); background: var(--ink); border: 0; padding: 10px 16px; cursor: pointer; display: inline-flex; gap: 10px; align-items: center; }
+.btn kbd { font: 500 .7rem var(--mono); opacity: .7; border: 1px solid currentColor; padding: 0 4px; border-radius: 2px; }
+.hero-art { max-width: 1000px; margin: 0 auto 8px; }
+.hero-art .art { aspect-ratio: 21 / 9; }
+.caption { max-width: 1000px; margin: 0 auto; font: italic 400 .9rem var(--serif); color: var(--muted); padding-top: 6px; }
+article { max-width: var(--measure); margin: 48px auto 0; font: 400 var(--size)/1.72 var(--read); color: var(--text); }
+article > p:first-of-type::first-letter { float: left; font: 800 4.6em/.82 var(--display); color: var(--red); padding: .06em .1em 0 0; }
+article p { margin: 0 0 1.25em; }
+article h2 { font: italic 800 1.65em/1.15 var(--display); color: var(--ink); margin: 1.9em 0 .55em; letter-spacing: -.01em; }
+article h3 { font: 600 1.05em/1.3 var(--ui); letter-spacing: .02em; color: var(--ink); margin: 1.7em 0 .4em; }
+article .anchor { display: none; }
+article ul, article ol { padding-left: 1.2em; margin: 0 0 1.25em; }
+article li { margin: .4em 0; }
+article li::marker { color: var(--red); }
+article a { color: var(--red); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+article strong { color: var(--ink); font-weight: 600; }
+article img { max-width: 100%; }
+.callout { margin: 2em -2em; padding: 1.1em 2em; border-block: 2px solid var(--ink); text-align: center; }
+.callout p { margin: 0; font: italic 600 1.3em/1.4 var(--display); color: var(--ink); }
+.callout strong { display: block; font: 500 .52em/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--red); margin-bottom: 12px; }
+.code { position: relative; margin: 1.6em 0; background: var(--ink); color: #efe8dc; border-radius: 2px; }
+.code pre { margin: 0; overflow-x: auto; padding: 22px 22px 18px; font: 400 .74em/1.65 var(--mono); }
+.code .lang { position: absolute; left: 22px; top: 6px; font: 500 .56em var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #f0a493; }
+.code .copy { position: absolute; right: 8px; top: 8px; font: 500 .6em var(--mono); color: #efe8dc; background: transparent; border: 1px solid #5a534a; padding: 3px 8px; cursor: pointer; }
+.end { text-align: center; color: var(--red); font-size: 1.4rem; margin: 1.4em 0 0; }
+.next { max-width: 1000px; margin: 64px auto 0; border-top: 2px solid var(--ink); padding-top: 22px; }
+.next .grid { grid-template-columns: repeat(2, 1fr); }
 
-/* reading mode: just the words */
+.arow { display: grid; grid-template-columns: 150px 1fr auto; gap: 18px; padding: 16px 0; border-bottom: 1px solid var(--rule); }
+@media (max-width: 600px) { .arow { grid-template-columns: 1fr; gap: 4px; } }
+footer { margin-top: 96px; border-top: 2px solid var(--ink); padding: 26px 0 50px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; font: 400 .85rem var(--ui); color: var(--muted); }
+footer .logo b { font-size: 1.6rem; }
+footer .r { text-align: right; }
+footer a { color: var(--muted); }
+
+/* reading mode */
 .rbar { display: none; }
-html.reading .top, html.reading footer, html.reading .after, html.reading .meta .btn-read { display: none; }
-html.reading .wrap { max-width: calc(var(--measure) + 48px); }
-html.reading .post-head { padding-top: 88px; }
-html.reading .rbar { display: flex; position: fixed; top: 12px; left: 50%; transform: translateX(-50%); z-index: 30; gap: 4px; align-items: center; padding: 5px; border: 1px solid var(--line); border-radius: 10px; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 6px 24px -12px rgba(0,0,0,.25); transition: opacity .25s; }
+html.reading .strip, html.reading .mast, html.reading .sections, html.reading footer, html.reading .next, html.reading .hero-art, html.reading .caption, html.reading .btn-read { display: none; }
+html.reading .a-head { padding-top: 96px; }
+html.reading .rbar { display: flex; position: fixed; top: 14px; left: 50%; transform: translateX(-50%); z-index: 30; gap: 2px; align-items: center; padding: 5px; background: var(--ink); color: var(--paper); box-shadow: 0 10px 30px -12px rgba(0,0,0,.45); transition: opacity .3s; }
 html.reading.idle .rbar { opacity: 0; }
 html.reading.idle .rbar:hover, html.reading .rbar:focus-within { opacity: 1; }
-.rbar button { font: 500 .78rem var(--mono); color: var(--fg); background: none; border: 0; border-radius: 6px; padding: 7px 9px; cursor: pointer; min-width: 32px; }
-.rbar button:hover { background: var(--soft); }
-.rbar button[aria-pressed="true"] { background: var(--soft); color: var(--accent); }
-.rbar .sep { width: 1px; height: 18px; background: var(--line); margin: 0 3px; }
-.rbar .sw { width: 14px; height: 14px; border-radius: 50%; display: inline-block; vertical-align: -2px; border: 1px solid rgba(0,0,0,.2); }
+.rbar button { font: 500 .74rem var(--ui); letter-spacing: .06em; color: inherit; background: none; border: 0; padding: 8px 10px; cursor: pointer; min-width: 32px; }
+.rbar button:hover { background: rgba(255,255,255,.1); }
+.rbar button[aria-pressed="true"] { color: #f0a493; }
+.rbar .sep { width: 1px; height: 18px; background: rgba(255,255,255,.2); margin: 0 4px; }
+.rbar .sw { width: 14px; height: 14px; border-radius: 50%; display: inline-block; vertical-align: -2px; border: 1px solid rgba(255,255,255,.4); }
 
+@media (max-width: 900px) {
+  .cover, .lower { grid-template-columns: 1fr; }
+  .mast { grid-template-columns: 1fr; text-align: center; padding-top: 22px; } .mast .l, .mast .r { display: none; }
+  .callout { margin-inline: 0; padding-inline: 0; }
+}
 @media (max-width: 600px) {
-  body { font-size: 16px; } :root { --size: 18px; }
-  .posts a.row, .posts .note { grid-template-columns: 1fr; gap: 4px; }
-  .top nav { gap: 14px; }
-  article .anchor { display: none; }
-  html.reading .rbar { top: auto; bottom: 14px; }
-  html.reading .post-head { padding-top: 40px; }
+  :root { --size: 19px; }
+  .grid, .next .grid { grid-template-columns: 1fr; }
+  .sections { gap: 8px 18px; } .sections a { font-size: .68rem; }
+  footer { grid-template-columns: 1fr; text-align: center; } footer .r { text-align: center; }
+  html.reading .rbar { top: auto; bottom: 14px; } html.reading .a-head { padding-top: 36px; }
   .rbar .hide-sm { display: none; }
 }
-@media (prefers-reduced-motion: reduce) { *, .logo .cur { animation: none !important; transition: none !important; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 """
 
-# Applied before paint so a saved reader theme never flashes.
-BOOT = """<script>try{var s=JSON.parse(localStorage.getItem('nook-reader')||'{}'),d=document.documentElement;if(s.theme)d.dataset.theme=s.theme;if(s.font)d.dataset.font=s.font;if(s.size)d.style.setProperty('--size',s.size+'px');if(s.on&&location.pathname.split('/').length>2)d.classList.add('reading')}catch(e){}</script>"""
+BOOT = """<script>try{var s=JSON.parse(localStorage.getItem('nook-reader')||'{}'),d=document.documentElement;if(s.theme)d.dataset.theme=s.theme;if(s.font)d.dataset.font=s.font;if(s.size)d.style.setProperty('--size',s.size+'px');if(s.on&&location.pathname.indexOf('/p/')===0)d.classList.add('reading')}catch(e){}</script>"""
 
 POST_JS = r"""<script>
 (() => {
   const d = document.documentElement, KEY = 'nook-reader';
-  const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
-  const save = s => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} };
-  let s = load();
-  const base = () => parseFloat(getComputedStyle(d).getPropertyValue('--size')) || 19;
+  let s; try { s = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { s = {}; }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} };
+  const base = () => parseFloat(getComputedStyle(d).getPropertyValue('--size')) || 21;
   const sync = () => {
-    document.querySelectorAll('[data-theme-set]').forEach(b => b.setAttribute('aria-pressed', (d.dataset.theme || 'light') === b.dataset.themeSet));
-    document.querySelectorAll('[data-font-set]').forEach(b => b.setAttribute('aria-pressed', (d.dataset.font || 'sans') === b.dataset.fontSet));
-    const r = document.querySelector('.btn-read'); if (r) r.setAttribute('aria-pressed', d.classList.contains('reading'));
+    document.querySelectorAll('[data-theme-set]').forEach(b => b.setAttribute('aria-pressed', (d.dataset.theme || 'paper') === b.dataset.themeSet));
+    document.querySelectorAll('[data-font-set]').forEach(b => b.setAttribute('aria-pressed', (d.dataset.font || 'serif') === b.dataset.fontSet));
   };
-  const toggle = on => { on = on ?? !d.classList.contains('reading'); d.classList.toggle('reading', on); s.on = on; save(s); sync(); if (on) idle(); };
+  let t; const idle = () => { d.classList.remove('idle'); clearTimeout(t); t = setTimeout(() => d.classList.contains('reading') && d.classList.add('idle'), 2200); };
+  const toggle = on => { on = on ?? !d.classList.contains('reading'); d.classList.toggle('reading', on); s.on = on; save(); sync(); if (on) { idle(); scrollTo({ top: 0 }); } };
   document.querySelectorAll('[data-read]').forEach(b => b.addEventListener('click', () => toggle()));
-  document.querySelectorAll('[data-theme-set]').forEach(b => b.addEventListener('click', () => { const t = b.dataset.themeSet; if (t === 'light') delete d.dataset.theme; else d.dataset.theme = t; s.theme = t === 'light' ? '' : t; save(s); sync(); }));
-  document.querySelectorAll('[data-font-set]').forEach(b => b.addEventListener('click', () => { const f = b.dataset.fontSet; if (f === 'sans') delete d.dataset.font; else d.dataset.font = f; s.font = f === 'sans' ? '' : f; save(s); sync(); }));
-  document.querySelectorAll('[data-size]').forEach(b => b.addEventListener('click', () => { const n = Math.min(26, Math.max(15, base() + +b.dataset.size)); d.style.setProperty('--size', n + 'px'); s.size = n; save(s); }));
+  document.querySelectorAll('[data-theme-set]').forEach(b => b.addEventListener('click', () => { const v = b.dataset.themeSet; if (v === 'paper') delete d.dataset.theme; else d.dataset.theme = v; s.theme = v === 'paper' ? '' : v; save(); sync(); }));
+  document.querySelectorAll('[data-font-set]').forEach(b => b.addEventListener('click', () => { const v = b.dataset.fontSet; if (v === 'serif') delete d.dataset.font; else d.dataset.font = v; s.font = v === 'serif' ? '' : v; save(); sync(); }));
+  document.querySelectorAll('[data-size]').forEach(b => b.addEventListener('click', () => { const n = Math.min(28, Math.max(15, base() + +b.dataset.size)); d.style.setProperty('--size', n + 'px'); s.size = n; save(); }));
   addEventListener('keydown', e => {
     if (e.metaKey || e.ctrlKey || e.altKey || /input|textarea/i.test(e.target.tagName)) return;
-    if (e.key === 'r') toggle(); else if (e.key === 'Escape' && d.classList.contains('reading')) toggle(false);
-    else if (d.classList.contains('reading') && (e.key === '+' || e.key === '=')) document.querySelector('[data-size="1"]').click();
-    else if (d.classList.contains('reading') && e.key === '-') document.querySelector('[data-size="-1"]').click();
+    const on = d.classList.contains('reading');
+    if (e.key === 'r') toggle(); else if (e.key === 'Escape' && on) toggle(false);
+    else if (on && (e.key === '+' || e.key === '=')) document.querySelector('[data-size="1"]').click();
+    else if (on && e.key === '-') document.querySelector('[data-size="-1"]').click();
   });
-  // In reading mode the toolbar fades out while you read and comes back when you move.
-  let t; const idle = () => { d.classList.remove('idle'); clearTimeout(t); t = setTimeout(() => d.classList.contains('reading') && d.classList.add('idle'), 2200); };
   ['mousemove', 'touchstart', 'keydown'].forEach(ev => addEventListener(ev, idle, { passive: true }));
-  // progress
   const bar = document.querySelector('.progress'), art = document.querySelector('article');
   const tick = () => { const r = art.getBoundingClientRect(); bar.style.transform = `scaleX(${Math.min(1, Math.max(0, -r.top / Math.max(r.height - innerHeight * .6, 1)))})`; };
   addEventListener('scroll', tick, { passive: true }); tick();
-  // copy buttons
   document.querySelectorAll('.code .copy').forEach(b => b.addEventListener('click', async () => {
     try { await navigator.clipboard.writeText(b.parentElement.querySelector('code').innerText); b.textContent = 'copied'; } catch (e) { b.textContent = 'press ⌘C'; }
     setTimeout(() => b.textContent = 'copy', 1400); }));
@@ -229,8 +245,46 @@ POST_JS = r"""<script>
 })();
 </script>"""
 
-def page(title, desc, path, body, script=""):
+# Each story gets its own abstract cover, drawn from its slug, so the page has pictures without stock photos.
+PALETTES = [("#e9dcc6", "#a3261b", "#1d3b53", "#e2a33b"), ("#dfe6dc", "#2f5d50", "#c9532f", "#121110"), ("#efd9cf", "#7b2d43", "#f0a493", "#2b2723"),
+            ("#dde3ea", "#24435f", "#e2a33b", "#a3261b"), ("#ece4cf", "#5b6b2f", "#121110", "#c9532f"), ("#e8dfee", "#4b2e6b", "#e2a33b", "#1d3b53")]
+def art(slug, label=""):
+    h = 0
+    for ch in slug: h = (h * 131 + ord(ch)) % 2**31
+    rnd = lambda n: (h >> n) % 1000 / 1000
+    bg, a, b, c = PALETTES[h % len(PALETTES)]
+    kind = (h >> 3) % 4
+    s = [f'<rect width="400" height="300" fill="{bg}"/>']
+    if kind == 0:   # sun over waves
+        s.append(f'<circle cx="{120 + rnd(5) * 160:.0f}" cy="{110 + rnd(7) * 30:.0f}" r="{60 + rnd(9) * 30:.0f}" fill="{a}"/>')
+        for i in range(6):
+            y = 170 + i * 22
+            s.append(f'<path d="M0 {y} Q 50 {y - 14} 100 {y} T 200 {y} T 300 {y} T 400 {y} V300 H0Z" fill="{b if i % 2 else c}" opacity="{.55 + i * .07:.2f}"/>')
+    elif kind == 1:  # stacked bars, like a waveform
+        n = 18
+        for i in range(n):
+            v = ((h >> (i % 24)) % 100) / 100
+            hgt = 40 + v * 170
+            s.append(f'<rect x="{22 + i * 20}" y="{150 - hgt / 2:.0f}" width="11" height="{hgt:.0f}" rx="5.5" fill="{a if i % 5 else c}"/>')
+        s.append(f'<rect x="0" y="262" width="400" height="38" fill="{b}"/>')
+    elif kind == 2:  # arcs
+        for i in range(7):
+            r = 250 - i * 34
+            s.append(f'<circle cx="{40 + rnd(4) * 60:.0f}" cy="300" r="{r}" fill="{[a, b, c][i % 3]}"/>')
+        s.append(f'<circle cx="{300 + rnd(6) * 50:.0f}" cy="{70 + rnd(8) * 40:.0f}" r="22" fill="{c}"/>')
+    else:            # grid of dots with one highlighted path
+        for x in range(10):
+            for y in range(7):
+                hit = (x * 7 + y + h) % 11 == 0
+                s.append(f'<circle cx="{38 + x * 36}" cy="{42 + y * 36}" r="{9 if hit else 4}" fill="{a if hit else b}"/>')
+        s.append(f'<path d="M38 222 L {110 + rnd(3) * 60:.0f} 150 L {220 + rnd(5) * 40:.0f} 186 L 362 78" fill="none" stroke="{c}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>')
+    return f'<span class="art" role="img" aria-label="{html.escape(label)}"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">{"".join(s)}</svg></span>'
+
+SECTIONS = [("Features", "/#contents"), ("Dispatches", "/#dispatches"), ("Engineering", "/#contents"), ("Archive", "/archive"), ("About", "/about")]
+
+def page(title, desc, path, body, script="", strip=True):
     t, dsc = html.escape(title), html.escape(desc)
+    issue = f'Issue No. {len(posts)} · <b>{html.escape(posts[0]["title"])}</b> · notes from building in public' if posts else ""
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -240,7 +294,7 @@ def page(title, desc, path, body, script=""):
 <meta name="description" content="{dsc}">
 <meta property="og:title" content="{t}"><meta property="og:description" content="{dsc}"><meta property="og:site_name" content="{NAME}">
 <meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#fbfbfa">
+<meta name="theme-color" content="#f4ede1">
 <link rel="canonical" href="{SITE}{path}">
 <link rel="alternate" type="application/rss+xml" title="{NAME}" href="/feed.xml">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -249,11 +303,16 @@ def page(title, desc, path, body, script=""):
 <style>{CSS}</style>
 </head>
 <body>
+<div class="strip">{issue}</div>
 <div class="wrap">
-<header class="top"><a class="logo" href="/" aria-label="{NAME}, home"><span class="p">~/</span>the-digital-nook<span class="cur" aria-hidden="true"></span></a>
-<nav><a href="/">posts</a><a href="/about">about</a><a href="/feed.xml">rss</a></nav></header>
+<header class="mast">
+  <span class="small l">Vol. I · {date.today().strftime("%B %Y")}</span>
+  <a class="logo" href="/" aria-label="{NAME}, home"><b>The Digital Nook<span>.</span></b></a>
+  <span class="small r"><a href="/feed.xml">Free · RSS ↗</a></span>
+</header>
+<nav class="sections" aria-label="Sections">{"".join(f'<a href="{u}">{n}</a>' for n, u in SECTIONS)}</nav>
 {body}
-<footer><span>© {date.today().year} {NAME}</span><span>plain html · no trackers · <a href="/feed.xml">rss</a></span></footer>
+<footer><span>© {date.today().year} {NAME}</span><a class="logo" href="/"><b>The Digital Nook<span>.</span></b></a><span class="r">Plain HTML · no trackers · <a href="/feed.xml">RSS</a></span></footer>
 </div>
 {script}
 </body>
@@ -262,7 +321,7 @@ def page(title, desc, path, body, script=""):
 
 # ---------- Build ----------
 iso = lambda d: d.isoformat()
-nice = lambda d: d.strftime("%b %-d, %Y")
+nice = lambda d: d.strftime("%B %-d, %Y")
 posts = []
 for f in sorted(glob.glob(os.path.join(ROOT, "content", "*.md"))):
     m = re.match(r"---\n(.*?)\n---\n(.*)", open(f).read(), re.S)
@@ -277,6 +336,8 @@ for f in sorted(glob.glob(os.path.join(ROOT, "content", "*.md"))):
                       mins=max(1, round(words / 220))))
 posts.sort(key=lambda p: (p["date"], p["slug"]), reverse=True)
 essays = [p for p in posts if not p["note"]]
+notes = [p for p in posts if p["note"]]
+section = lambda p: (p["tags"][0] if p["tags"] else "feature").title()
 
 if os.path.isdir(OUT):
     for x in os.listdir(OUT):
@@ -286,76 +347,86 @@ os.makedirs(os.path.join(OUT, "p"), exist_ok=True)
 READBAR = """<div class="rbar" role="toolbar" aria-label="Reading settings">
   <button type="button" data-size="-1" aria-label="Smaller text">A−</button><button type="button" data-size="1" aria-label="Larger text">A+</button>
   <span class="sep"></span>
-  <button type="button" data-font-set="sans">Sans</button><button type="button" data-font-set="serif">Serif</button>
+  <button type="button" data-font-set="serif">Serif</button><button type="button" data-font-set="sans">Sans</button>
   <span class="sep"></span>
-  <button type="button" data-theme-set="light" aria-label="Light"><span class="sw" style="background:#fbfbfa"></span></button><button type="button" data-theme-set="sepia" aria-label="Sepia"><span class="sw" style="background:#f6f0e4"></span></button><button type="button" data-theme-set="dark" aria-label="Dark"><span class="sw" style="background:#111315"></span></button>
+  <button type="button" data-theme-set="paper" aria-label="Paper"><span class="sw" style="background:#f4ede1"></span></button><button type="button" data-theme-set="white" aria-label="White"><span class="sw" style="background:#fdfcfa"></span></button><button type="button" data-theme-set="dark" aria-label="Dark"><span class="sw" style="background:#16140f"></span></button>
   <span class="sep"></span>
-  <button type="button" data-read aria-label="Leave reading mode">✕<span class="hide-sm">&nbsp;exit</span></button>
+  <button type="button" data-read aria-label="Leave reading mode">✕<span class="hide-sm">&nbsp;Exit</span></button>
 </div>"""
 
+def story(p):
+    return f'<a class="story" href="/p/{p["slug"]}">{art(p["slug"])}<p class="kicker" style="margin:16px 0 0">{section(p)} · {p["mins"]} min</p><h4>{html.escape(p["title"])}</h4><p>{html.escape(p["summary"])}</p><span class="byline">{nice(p["date"])}</span></a>'
+
 for i, p in enumerate(essays):
-    older = essays[i + 1] if i + 1 < len(essays) else None
-    after = (f'<nav class="after"><span class="label">previous</span><a href="/p/{older["slug"]}"><b>{html.escape(older["title"])}</b></a></nav>' if older
-             else '<nav class="after"><span class="label">that\'s the first one</span><a href="/"><b>All posts →</b></a></nav>')
-    tagline = " ".join(f"#{html.escape(t)}" for t in p["tags"])
+    others = [q for q in essays if q is not p][:2]
     body = f"""<div class="progress" aria-hidden="true"></div>
 {READBAR}
 <main>
-  <header class="post-head">
-    <span class="label">{iso(p["date"])}</span>
+  <header class="a-head">
+    <p class="kicker">{section(p)} · {p["words"]:,} words</p>
     <h1>{html.escape(p["title"])}</h1>
-    {f'<p class="sub">{html.escape(p["summary"])}</p>' if p["summary"] else ""}
-    <div class="meta"><span>{p["mins"]} min read</span><span>{p["words"]} words</span><span>{tagline}</span><span class="sp"></span>
-      <button class="btn btn-read" type="button" data-read aria-pressed="false">reading mode <kbd>R</kbd></button></div>
+    {f'<p class="dek">{html.escape(p["summary"])}</p>' if p["summary"] else ""}
+    <div class="a-meta"><span>From the Nook</span><span>{nice(p["date"])}</span><span>{p["mins"]} min read</span>
+      <button class="btn btn-read" type="button" data-read>Reading mode <kbd>R</kbd></button></div>
   </header>
+  <figure class="hero-art" style="margin:0 auto">{art(p["slug"], "Abstract cover illustration")}</figure>
+  <p class="caption">Cover: generated for this story.</p>
   <article>
 {p["body"]}
+    <p class="end" aria-hidden="true">■</p>
   </article>
-  {after}
+  {f'<section class="next"><div class="hd"><h3>Keep reading</h3><a class="small" href="/archive">Archive →</a></div><div class="grid">{"".join(story(q) for q in others)}</div></section>' if others else ""}
 </main>"""
     open(os.path.join(OUT, "p", p["slug"] + ".html"), "w").write(page(f'{p["title"]} — {NAME}', p["summary"], f'/p/{p["slug"]}', body, POST_JS))
 
-def row(p):
-    if p["note"]:
-        return f'  <li class="note" id="{p["slug"]}"><div><time class="mono" datetime="{iso(p["date"])}" style="font-size:.82rem;color:var(--muted)">{nice(p["date"])}</time><span class="k">note</span></div><div><h3>{html.escape(p["title"])}</h3>{p["body"]}</div></li>'
-    tags = " ".join(f"#{html.escape(t)}" for t in p["tags"])
-    return f'  <li><a class="row" href="/p/{p["slug"]}"><time datetime="{iso(p["date"])}">{nice(p["date"])}</time><div><h2>{html.escape(p["title"])}</h2><p>{html.escape(p["summary"])}</p><div class="tags">{p["mins"]} min · {tags}</div></div></a></li>'
-
+lead = essays[0] if essays else None
+cover = f"""<a class="cover" href="/p/{lead["slug"]}">
+    {art(lead["slug"], "Cover illustration")}
+    <div>
+      <p class="kicker">Cover story · {lead["words"]:,} words</p>
+      <h2>{html.escape(lead["title"])}</h2>
+      <p class="dek">{html.escape(lead["summary"])}</p>
+      <span class="byline">From the Nook · {nice(lead["date"])} · {lead["mins"]} min read</span><br>
+      <span class="more">Read the story →</span>
+    </div>
+  </a>""" if lead else ""
+disp = "".join(f'<li id="{n["slug"]}"><span class="kicker">{n["date"].strftime("%b %-d")}</span><h5>{html.escape(n["title"])}</h5>{n["body"]}</li>' for n in notes)
 home = f"""<main>
-  <section class="hero">
-    <h1>{NAME}</h1>
-    <p>{TAGLINE}</p>
-  </section>
-  <span class="label">posts &amp; notes</span>
-  <ul class="posts">
-{chr(10).join(row(p) for p in posts)}
-  </ul>
+  {cover}
+  <div class="lower">
+    <section id="contents"><div class="hd"><h3>In this issue</h3><span class="small">{len(essays)} stories</span></div>
+      <div class="grid">{"".join(story(p) for p in essays[1:])}</div></section>
+    <aside id="dispatches"><div class="hd"><h3>Dispatches</h3><span class="small">short notes</span></div><ul class="disp">{disp}</ul></aside>
+  </div>
+  <section class="quote"><p>“Most products show the finished thing. This is the part in between.”</p><span class="small">— The Nook, on why it exists</span></section>
 </main>"""
 open(os.path.join(OUT, "index.html"), "w").write(page(NAME, TAGLINE, "/", home))
 
+rows = "".join(f'<li class="arow"><span class="small">{nice(p["date"])}</span><a href="{"/p/" + p["slug"] if not p["note"] else "/#" + p["slug"]}" style="font:700 1.25rem/1.3 var(--display);color:var(--ink);text-decoration:none">{html.escape(p["title"])}</a><span class="kicker">{"Dispatch" if p["note"] else section(p)}</span></li>' for p in posts)
+archive = f'<main><header class="a-head"><p class="kicker">Archive</p><h1>Everything, in order.</h1></header><ul style="list-style:none;padding:0;max-width:900px;margin:0 auto">{rows}</ul></main>'
+open(os.path.join(OUT, "archive.html"), "w").write(page(f"Archive — {NAME}", "Every story and dispatch.", "/archive", archive))
+
 about = f"""<main>
-  <header class="post-head"><span class="label">about</span><h1>A small corner for the work behind the work.</h1></header>
+  <header class="a-head"><p class="kicker">About</p><h1>A small corner for the work behind the work.</h1>
+  <p class="dek">Stories, dispatches and measurements from building software in public.</p></header>
   <article>
-<p>{NAME} is where I write down what happens while building software: the bugs that took too long to find, the numbers behind each decision, and the things still undecided.</p>
+<p>{NAME} is where the in-between parts get written down: the bugs that took too long to find, the numbers behind each decision, and the questions still open.</p>
 <p>Right now most of it is about <a href="https://freshflo.vercel.app">Freshflo</a>, a dictation app for Mac, Windows and Android, on its way to launch.</p>
-<h2 id="how">How this site is made</h2>
-<p>Plain HTML generated from Markdown files by one small Python script, hosted on Vercel. No trackers, no cookies, no JavaScript you need to read a post.</p>
-<p>Every post has a <strong>reading mode</strong>: press <code>R</code> to hide everything but the words, then pick text size, sans or serif, and a light, sepia or dark page. It remembers your choice.</p>
-<p>Follow along with the <a href="/feed.xml">RSS feed</a>.</p>
+<h2 id="read">Made for reading</h2>
+<p>Every story has a <strong>reading mode</strong>. Press <code>R</code> and everything but the words disappears; choose the text size, serif or sans, and a paper, white or dark page. It remembers your choice.</p>
+<p>The site is plain HTML built from Markdown files by one small script. No trackers, no cookies. Follow along by <a href="/feed.xml">RSS</a>.</p>
   </article>
 </main>"""
 open(os.path.join(OUT, "about.html"), "w").write(page(f"About — {NAME}", "What The Digital Nook is and how it's made.", "/about", about))
-
-open(os.path.join(OUT, "404.html"), "w").write(page(f"Not found — {NAME}", "Page not found.", "/404", '<main><section class="hero"><span class="label">404</span><h1>Nothing in this nook.</h1><p><a href="/">← back to all posts</a></p></section></main>'))
-
-open(os.path.join(OUT, "favicon.svg"), "w").write('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#16181a"/><path d="M8 11l6 5-6 5" fill="none" stroke="#fbfbfa" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><rect x="16" y="20" width="9" height="2.8" rx="1" fill="#2f6fed"/></svg>')
+open(os.path.join(OUT, "404.html"), "w").write(page(f"Not found — {NAME}", "Page not found.", "/404", '<main><header class="a-head"><p class="kicker">404</p><h1>This page wandered off.</h1><p class="dek"><a href="/">Back to the current issue →</a></p></header></main>'))
+open(os.path.join(OUT, "favicon.svg"), "w").write('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#121110"/><text x="16" y="23" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-weight="800" font-size="20" fill="#f4ede1">N</text><circle cx="24.5" cy="21.5" r="2.2" fill="#a3261b"/></svg>')
 
 rfc = lambda d: format_datetime(datetime(d.year, d.month, d.day, tzinfo=timezone.utc))
 link = lambda p: f"{SITE}/#{p['slug']}" if p["note"] else f"{SITE}/p/{p['slug']}"
 items = "\n".join(f"  <item><title>{html.escape(p['title'])}</title><link>{link(p)}</link><guid>{link(p)}</guid><pubDate>{rfc(p['date'])}</pubDate><description>{html.escape(p['summary'] or re.sub(r'<[^>]+>', '', p['body']))}</description></item>" for p in posts)
 open(os.path.join(OUT, "feed.xml"), "w").write(f'<?xml version="1.0" encoding="utf-8"?>\n<rss version="2.0"><channel>\n  <title>{NAME}</title><link>{SITE}</link><description>{html.escape(TAGLINE)}</description>\n{items}\n</channel></rss>\n')
 open(os.path.join(OUT, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
-urls = ["/", "/about"] + [f"/p/{p['slug']}" for p in essays]
+urls = ["/", "/about", "/archive"] + [f"/p/{p['slug']}" for p in essays]
 open(os.path.join(OUT, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="utf-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "\n".join(f"  <url><loc>{SITE}{u}</loc></url>" for u in urls) + "\n</urlset>\n")
 shutil.copy(os.path.join(ROOT, "vercel.json"), os.path.join(OUT, "vercel.json"))
-print(f"✓ {NAME}: {len(essays)} posts, {len(posts) - len(essays)} notes → dist/")
+print(f"✓ {NAME}: {len(essays)} stories, {len(notes)} dispatches → dist/")
