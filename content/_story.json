@@ -1,0 +1,23 @@
+{
+  "started": "2026-10-11",
+  "launch": "Freshflo 1.0",
+  "roadmap": [
+    {"item": "Public beta for Mac", "status": "done", "date": "2026-10-11"},
+    {"item": "Grammar pass for spoken and Indian English", "status": "done", "date": "2026-10-12"},
+    {"item": "Windows and Android betas", "status": "done", "date": "2026-10-23"},
+    {"item": "Backend in its own reviewed repo", "status": "done", "date": "2026-10-26"},
+    {"item": "Payments and Pro licences", "status": "doing"},
+    {"item": "Own domain (some networks block vercel.app)", "status": "doing"},
+    {"item": "Notarized Mac download", "status": "todo"},
+    {"item": "iPhone app", "status": "todo"},
+    {"item": "Public launch", "status": "todo"}
+  ],
+  "milestones": [
+    {"date": "2026-10-11", "title": "ExcuseMe becomes Freshflo", "text": "New name, new icon, public Mac beta."},
+    {"date": "2026-10-12", "title": "0.10 → 0.13 in one day", "text": "Grammar, meeting notes, microphone fixes, Settings redesign."},
+    {"date": "2026-10-17", "title": "Pro licences", "text": "Signed keys that work offline. Everything stays free during the beta."},
+    {"date": "2026-10-23", "title": "Three platforms", "text": "Mac 0.22, Windows 0.6, Android 0.3 ship together."},
+    {"date": "2026-10-26", "title": "Backend split out", "text": "Every server change now goes through review and tests."},
+    {"date": "2026-10-28", "title": "WhatsApp channel", "text": "Freshflo's cleanup engine running on the server."}
+  ]
+}
