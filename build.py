@@ -308,7 +308,7 @@ def page(title, desc, path, body, script="", strip=True):
 <header class="mast">
   <span class="small l">Vol. I · {date.today().strftime("%B %Y")}</span>
   <a class="logo" href="/" aria-label="{NAME}, home"><b>The Digital Nook<span>.</span></b></a>
-  <span class="small r"><a href="/feed.xml">Free · RSS ↗</a></span>
+  <span class="small r"></span>
 </header>
 <nav class="sections" aria-label="Sections">{"".join(f'<a href="{u}">{n}</a>' for n, u in SECTIONS)}</nav>
 {body}
