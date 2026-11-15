@@ -232,6 +232,7 @@ article.post img { max-width: 100%; border-radius: 14px; }
 .callout p { margin: 0; font: 400 1.25em/1.4 var(--serif); color: var(--ink); }
 .callout strong { display: block; font: 500 .55em/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--fresh-ink); margin-bottom: 10px; }
 .code { position: relative; margin: 1.6em 0; background: #0c2421; color: #e8f2ef; border-radius: 16px; }
+.code pre code { background: none; padding: 0; border-radius: 0; font: inherit; color: inherit; }
 .code pre { margin: 0; overflow-x: auto; padding: 24px 22px 18px; font: 400 .74em/1.65 var(--mono); }
 .code .lang { position: absolute; left: 22px; top: 7px; font: 500 .56em var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #62e7bf; }
 .code .copy { position: absolute; right: 10px; top: 10px; font: 500 .6em var(--mono); color: #e8f2ef; background: transparent; border: 1px solid #2b4440; border-radius: 6px; padding: 3px 8px; cursor: pointer; }
