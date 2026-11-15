@@ -130,7 +130,18 @@ em { color: var(--fresh-ink); }
 .tile { position: relative; aspect-ratio: 1; border-radius: 22%; background: linear-gradient(#fff, #f4f9f7 55%, #e2efea); border: 1px solid var(--line); box-shadow: 0 40px 80px -40px rgba(12,36,33,.45), inset 0 0 0 3px #fff; display: grid; place-items: center; max-width: 440px; justify-self: center; width: 100%; }
 html[data-theme="dark"] .tile { background: linear-gradient(#18241f, #111a17); box-shadow: 0 40px 80px -40px #000; }
 .tile .mark { width: 76%; filter: drop-shadow(0 14px 14px rgba(14,159,121,.22)); }
-.tile figcaption { position: absolute; bottom: 9%; font: 400 1.15rem var(--serif); font-style: italic; color: var(--muted); }
+.tile { align-content: center; gap: 0; padding: 9% 8%; }
+.tile .mark { width: 62%; height: auto; aspect-ratio: 650 / 300; justify-self: center; margin-bottom: 6%; }
+.demo { width: 100%; display: grid; gap: 10px; }
+.demo p { margin: 0; display: flex; gap: 10px; align-items: flex-start; padding: 11px 14px; border-radius: 14px; font-size: .9rem; line-height: 1.4; min-height: 3.2em; }
+.demo .said { background: var(--sunk); color: var(--faint); font-style: italic; }
+.demo .sent { background: var(--surface); color: var(--ink); font-weight: 600; border: 1px solid var(--line); box-shadow: 0 10px 22px -16px rgba(14,159,121,.5); opacity: 0; transform: translateY(6px); transition: opacity .5s, transform .5s; }
+.demo.done .sent { opacity: 1; transform: none; }
+.demo .rec { flex: none; width: 9px; height: 9px; margin-top: 5px; border-radius: 50%; background: #e5484d; animation: blink 1s infinite; }
+.demo.done .rec { animation: none; background: var(--faint); }
+.demo .ok { flex: none; color: var(--fresh); }
+@keyframes blink { 50% { opacity: .25; } }
+.tile figcaption { position: absolute; bottom: 4.5%; font: 400 1.15rem var(--serif); font-style: italic; color: var(--muted); }
 .mark .line { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 2.4s cubic-bezier(.6,.05,.25,1) .3s forwards; }
 .mark .dot { transform-origin: 786px 512px; transform: scale(0); animation: pop .5s cubic-bezier(.3,1.6,.5,1) 2.5s forwards; }
 @keyframes draw { to { stroke-dashoffset: 0; } }
@@ -481,7 +492,12 @@ home = f"""<main>
       <p class="lede">A dictation app made in the open. Every bug, measurement and decision on the way to launch, written down while it happens.</p>
       <div class="actions">{f'<a class="pill" href="/p/{first["slug"]}">Start at chapter one →</a>' if first else ""}{f'<a class="pill ghost" href="/p/{latest["slug"]}">Read the latest</a>' if latest else ""}</div>
     </div>
-    <figure class="tile" style="margin:0">{mark()}<figcaption>say it messy, send it fresh</figcaption></figure>
+    <figure class="tile" style="margin:0">{mark()}
+      <div class="demo" aria-label="Freshflo turns messy speech into clean text">
+        <p class="said"><span class="rec"></span><span class="txt">so um I think we should uh ship it friday no wait thursday</span></p>
+        <p class="sent"><span class="ok">✓</span><span class="txt">I think we should ship it Thursday.</span></p>
+      </div>
+      <figcaption>say it messy, send it fresh</figcaption></figure>
   </section>
   <div class="stats">
     <div><b data-since="{STORY["started"]}">{day}</b><span>days building</span></div>
@@ -503,6 +519,7 @@ home = f"""<main>
   </section>
   {CTA}
 </main>
+<script>(function(){{var d=document.querySelector('.demo');if(!d)return;var L=[["so um I think we should uh ship it friday no wait thursday","I think we should ship it Thursday."],["okay so the the mic was silent because like the device changed","The mic went silent because the input device changed."],["remind me to um email the beta folks tomorrow morning","Email the beta testers tomorrow morning."]],i=0,said=d.querySelector('.said .txt'),sent=d.querySelector('.sent .txt');if(matchMedia('(prefers-reduced-motion: reduce)').matches){{d.classList.add('done');return}}function run(){{var w=L[i][0].split(' '),k=0;d.classList.remove('done');said.textContent='';sent.textContent=L[i][1];(function t(){{if(k<w.length){{said.textContent+=(k?' ':'')+w[k++];setTimeout(t,110)}}else{{setTimeout(function(){{d.classList.add('done')}},350);i=(i+1)%L.length;setTimeout(run,4200)}}}})()}}run()}})();</script>
 <script>document.querySelectorAll('[data-since]').forEach(b => b.textContent = Math.floor((Date.now() - new Date(b.dataset.since)) / 864e5));</script>"""
 open(os.path.join(OUT, "index.html"), "w").write(page(f"{NAME} · The story of building Freshflo", TAGLINE, "/", home))
 
