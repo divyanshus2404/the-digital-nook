@@ -11,7 +11,7 @@ This is a small corner of the internet for the work behind the work. Most produc
 - **Posts:** longer write-ups of one problem, start to finish.
 - **Notes:** a few lines when something worth remembering happens.
 
-Most of it is about [Freshflo](https://freshflo.vercel.app) for now, a dictation app on its way to launch.
+Most of it is about [Freshflo](https://freshflo.online) for now, a dictation app on its way to launch.
 
 ## Built to be read
 

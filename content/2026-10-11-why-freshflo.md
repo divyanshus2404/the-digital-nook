@@ -18,4 +18,4 @@ Most product pages show the finished thing. This blog is the other side: the bug
 - Bugs that took far too long to find
 - Decisions still open, and what I'm weighing
 
-If something here is wrong or you want a deeper dive, [write to me](https://freshflo.vercel.app/help#ask). A person reads every message.
+If something here is wrong or you want a deeper dive, [write to me](https://freshflo.online/help#ask). A person reads every message.

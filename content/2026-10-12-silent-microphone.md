@@ -20,4 +20,4 @@ In 0.12.1 Freshflo stopped blindly trusting the system default:
 
 Later the recorder moved to a different macOS audio API entirely, because the old one still got silence from the built-in mic while headphones were the output.
 
-> **Tip:** there's now a [microphone guide](https://freshflo.vercel.app/microphones) if you want to pick yours by hand.
+> **Tip:** there's now a [microphone guide](https://freshflo.online/microphones) if you want to pick yours by hand.

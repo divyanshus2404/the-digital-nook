@@ -20,7 +20,7 @@ from email.utils import format_datetime
 
 NAME = "The Digital Nook"
 TAGLINE = "The story of building Freshflo, a dictation app made in the open: every bug, measurement and decision on the way to launch."
-SITE = os.environ.get("SITE_URL", "https://the-digital-nook.vercel.app").rstrip("/")
+SITE = os.environ.get("SITE_URL", "https://nook.freshflo.online").rstrip("/")
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(ROOT, "dist")
 
@@ -72,7 +72,7 @@ def markdown(text):
 # ---------- Look: Freshflo's own brand (pearl, ink, mint), told as a story ----------
 import json
 STORY = json.load(open(os.path.join(ROOT, "content", "_story.json")))
-APP = "https://freshflo.vercel.app"
+APP = "https://freshflo.online"
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,600..800&family=Hanken+Grotesk:ital,wght@0,400..700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap">')
 
@@ -423,7 +423,7 @@ def page(title, desc, path, body, script=""):
 <nav aria-label="Main"><a class="hide-sm" href="/#story">The story</a><a class="hide-md" href="/#stories">Stories</a><a class="hide-md" href="/archive">Archive</a><a class="pill" href="{APP}/welcome">Get Freshflo</a></nav></div></header>
 <div class="wrap">
 {body}
-<footer>{BRAND}<span><a href="/about">About</a> · <a href="/archive">Archive</a> · <a href="/feed.xml">RSS</a> · <a href="{APP}">freshflo.vercel.app</a></span></footer>
+<footer>{BRAND}<span><a href="/about">About</a> · <a href="/archive">Archive</a> · <a href="/feed.xml">RSS</a> · <a href="{APP}">freshflo.online</a></span></footer>
 </div>
 {script}
 </body>

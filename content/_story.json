@@ -7,7 +7,7 @@
     {"item": "Windows and Android betas", "status": "done", "date": "2026-10-23"},
     {"item": "Backend in its own reviewed repo", "status": "done", "date": "2026-10-26"},
     {"item": "Payments and Pro licences", "status": "doing"},
-    {"item": "Own domain (some networks block vercel.app)", "status": "doing"},
+    {"item": "Own domain (some networks block vercel.app)", "status": "done"},
     {"item": "Notarized Mac download", "status": "todo"},
     {"item": "iPhone app", "status": "todo"},
     {"item": "Public launch", "status": "todo"}
